@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>city Pune Hotels</title>
+    <link
+      rel="shortcut icon"
+      href="https://cdn.worldvectorlogo.com/logos/bookingcom-1.svg"
+    />
+    <link rel="stylesheet" href="./styles/ss_city.css" />
+    <link rel="stylesheet" href="./styles/navbar.css" />
+    <link rel="stylesheet" href="./styles/footer.css" />
+  </head>
+  <body>
+    <div id="top_navbar"></div>
+    <div id="ss_container">
+      <div id="ss_city_box_1">
+        <div id="ss_city_box_1_1">
+          <div id="ss_city_box_1_1">
+            <div id="ss_city_box_1_1">
+              <div id="ss_query_result">
+                <h2>Search</h2>
+                <p>Destination</p>
+                <div id="ss_query_city"></div>
+                <p>Check-in date</p>
+                <div id="ss_query_checkin"></div>
+                <p>Check-out date</p>
+                <div id="ss_query_checkout"></div>
+                <p>Guests</p>
+                <div id="ss_query_noguest"></div>
+                <div id="ss_check_div">
+                  <div id="ss_check_div_1">
+                    <input
+                      type="checkbox"
+                      id="ss_check_one"
+                      name="ss_check_one"
+                    />
+                    <label for="ss_check_one">Entire homes & apartments</label>
+                  </div>
+                  <div id="ss_check_div_2">
+                    <input
+                      type="checkbox"
+                      id="ss_check_two"
+                      name="ss_check_two"
+                    />
+                    <label for="ss_check_two">I'm traveling for work</label>
+                  </div>
+                </div>
+                <button id="ss_query_searchBtn">Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="ss_city_box_1_2">
+          <h4>Filter By:</h4>
+          <button id="sort-low-to-high">Sort Low to High</button>
+          <button id="sort-high-to-low">Sort High to Low</button>
+          <button id="greater-than">Price greater 2000</button>
+          <button id="less-than">Price less 2000</button>
+          <button id="ss_filter_1">Breakfast Included</button>
+          <button id="ss_filter_2">All-inclusive</button>
+          <button id="ss_filter_3">Double bed</button>
+          <button id="ss_filter_4">Free WiFi</button>
+        </div>
+      </div>
+      <div id="ss_city_box_2"></div>
+    </div>
+    <footer>
+      <div id="HP_footer-container"></div>
+    </footer>
+  </body>
+</html>
+<script type="module">
+  import navbar from "../components/navbar.js";
+  import footer from "../components/footer.js";
+
+  let header = document.getElementById("top_navbar");
+  header.innerHTML = navbar();
+  let foot = document.getElementById("HP_footer-container");
+  foot.innerHTML = footer();
+
+  let api = `https://bookit-com-server.onrender.com/hotel?city=Pune`;
+  console.log(api);
+
+  let getdata = async () => {
+    let res = await fetch(api);
+    res = await res.json();
+    console.log(res);
+    renderDom(res);
+  };
+  getdata();
+
+  let renderDom = (data) => {
+    let cont = document.getElementById("ss_city_box_2");
+    cont.innerHTML = null;
+
+    data.forEach((el) => {
+      let div = document.createElement("div");
+
+      let image1 = document.createElement("img");
+      let ss_one = document.createElement("div");
+      let ss_two = document.createElement("div");
+      let ss_three = document.createElement("div");
+      let ss_three_1 = document.createElement("div");
+      let ss_three_2 = document.createElement("div");
+      let name1 = document.createElement("p");
+      let price1 = document.createElement("p");
+      let type1 = document.createElement("p");
+      let city1 = document.createElement("p");
+      let rating1 = document.createElement("p");
+      let review1 = document.createElement("p");
+      let strikeprice1 = document.createElement("p");
+      let deal = document.createElement("p");
+      let availability = document.createElement("p");
+      availability.addEventListener("click", () => {
+        storeLocal(el);
+      });
+
+      //classname's for styling
+      div.className = "ss_item";
+      ss_one.className = "ss_one-item";
+      ss_two.className = "ss_two-item";
+      ss_three.className = "ss_three-item";
+      ss_three_1.className = "ss_three-item_1";
+      ss_three_2.className = "ss_three-item_2";
+
+      name1.className = "ss_name-item";
+      price1.className = "ss_price-item";
+      type1.className = "ss_type-item";
+      city1.className = "ss_city-item";
+      rating1.className = "ss_rating-item";
+      review1.className = "ss_review1-item";
+      strikeprice1.className = "ss_strikeprice1";
+      deal.className = "ss_deal";
+      availability.className = "ss_availability";
+      /////////////////////////////////////////
+      image1.src = el.image;
+
+      let emptystr = "";
+      for (let i = 0; i < Math.floor(el.rating); i++) {
+        emptystr += "⭐";
+      }
+
+      name1.innerHTML = `${el.name} ${emptystr}`;
+      price1.innerHTML = `₹ ${el.price}`;
+      type1.innerHTML = el.type;
+      city1.innerHTML = `📌${el.city}`;
+
+      review1.innerHTML = el.review;
+      strikeprice1.innerHTML = `₹ ${el.strikeprice} `;
+      deal.innerText = "Limited-time Deal";
+      availability.innerText = "See availability >";
+      ss_three_1.append("Review Score", review1);
+      ss_three_2.append(strikeprice1, price1);
+      ss_one.append(image1);
+      ss_two.append(name1, rating1, city1, deal, type1);
+      ss_three.append(ss_three_1, ss_three_2, availability);
+
+      div.append(ss_one, ss_two, ss_three);
+
+      cont.append(div);
+    });
+  };
+
+  let storeLocal = (el) => {
+    let hotel = JSON.parse(localStorage.getItem("hotel"));
+    console.log(el);
+    // hotel.push(el);
+    localStorage.setItem("hotel", JSON.stringify(el));
+    window.location.href = "./checkout.html";
+  };
+
+  let sortLH = async () => {
+    document.getElementById("sort-low-to-high").style.background = "#0071c2";
+
+    document.getElementById("sort-low-to-high").style.color = "#fff";
+
+    document.getElementById("sort-low-to-high").style.border = "none";
+
+    let res = await fetch(
+      `https://bookit-com-server.onrender.com/hotel?_sort=price&_order=asc&city=Pune`
+    );
+    res = await res.json();
+    renderDom(res);
+  };
+
+  let sortHL = async () => {
+    let res = await fetch(
+      `https://bookit-com-server.onrender.com/hotel?_sort=price&_order=desc&city=Pune`
+    );
+    res = await res.json();
+    renderDom(res);
+  };
+
+  let greter = async () => {
+    let res = await fetch(
+      `https://bookit-com-server.onrender.com/hotel?price_gte=2001&city=Pune`
+    );
+    res = await res.json();
+    renderDom(res);
+  };
+  let lesser = async () => {
+    let res = await fetch(
+      `https://bookit-com-server.onrender.com/hotel?price_lte=2000&city=Pune`
+    );
+    res = await res.json();
+    renderDom(res);
+  };
+  window.onload = () => {
+    document
+      .getElementById("sort-low-to-high")
+      .addEventListener("click", sortLH);
+
+    document
+      .getElementById("sort-high-to-low")
+      .addEventListener("click", sortHL);
+
+    document.getElementById("greater-than").addEventListener("click", greter);
+
+    document.getElementById("less-than").addEventListener("click", lesser);
+
+    let query = JSON.parse(localStorage.getItem("query"));
+    console.log(query);
+    document.getElementById("ss_query_city").innerText = query.query;
+    document.getElementById("ss_query_checkin").innerText = query.chekin;
+    document.getElementById("ss_query_checkout").innerText = query.chekout;
+    document.getElementById(
+      "ss_query_noguest"
+    ).innerText = `${query.adult} Adult & ${query.child} Child`;
+  };
+
+  let signinUser = JSON.parse(localStorage.getItem("HP_user"));
+  let signinName = document.getElementById("AKsignin");
+  signinName.innerText = signinUser.name || "Sign In";
+
+  let user_div = document.querySelector("#top_navbar_second_user > div");
+  user_div.innerText = signinUser.name[0];
+</script>

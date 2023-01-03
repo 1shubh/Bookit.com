@@ -1,0 +1,81 @@
+#d-box {
+  width: 30%;
+  /* margin: auto; */
+  flex-direction: column;
+  /* border: 1px solid black; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 10px;
+}
+#d-box input {
+  width: 80%;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+#d-box h2 {
+  color: #003580;
+  font-size: 30px;
+  padding: 10px;
+}
+#d-box button {
+  width: 40%;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: green;
+  color: #fff;
+  border: none;
+  padding: 10px;
+}
+
+#showresBtn {
+  width: 40%;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  background-color: #0071c2;
+  /* color: black; */
+  border: none;
+  /* padding: 15px; */
+  height: 38px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* div {
+  border: 1px solid black;
+} */
+
+#ss_container {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+}
+
+#res_count {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 28%;
+  justify-content: space-between;
+}
+
+#res_count_1 {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+#showresBtn:hover {
+  background-color: #003580;
+  cursor: pointer;
+  /* font-weight: bold; */
+}
